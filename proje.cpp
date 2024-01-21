@@ -29,11 +29,11 @@ void TaxiEkle();
 void TaxiListeleme();
 void TaxiArama();
 void TaxiSil();
-void TaxiDuzenle();
 
 void MusteriEkle();
 void MusteriListeleme();
 void MusteriArama();
+void MusteriSil();
 
 int main() {
     char anamenu;
@@ -58,7 +58,6 @@ int main() {
                 cout << "|       2- Taksi Listeleme   |" << endl;
                 cout << "|       3- Taksi Arama       |" << endl;
                 cout << "|       4- Taksi Sil         |" << endl;
-                cout << "|       5- Taksi Duzenle     |" << endl;
                 cout << "|----------------------------|" << endl;
                 char taxiSecim;
                 cin >> taxiSecim;
@@ -76,9 +75,6 @@ int main() {
                     case '4':
                         TaxiSil();
                         break;
-                    case '5':
-                        TaxiDuzenle();
-                        break;
                     default:
                         cout << "Gecersiz secim. Tekrar deneyin." << endl;
                 }
@@ -92,6 +88,7 @@ int main() {
                 cout << "|       1- Musteri Ekleme      |" << endl;
                 cout << "|       2- Musteri Listeleme   |" << endl;
                 cout << "|       3- Musteri Arama       |" << endl;
+                cout << "|       4- Musteri Sil         |" << endl;
                 cout << "|------------------------------|" << endl;
                 char musteriSecim;
                 cin >> musteriSecim;
@@ -106,6 +103,8 @@ int main() {
                     case '3':
                         MusteriArama();
                         break;
+                    case '4':  
+                        MusteriSil();
                     default:
                         cout << "Gecersiz secim. Tekrar deneyin." << endl;
                 }
@@ -193,7 +192,40 @@ void MusteriArama() {
         cout << "Kayit Bulunamadi..." << endl;
     }
 }
+void MusteriSil() {
+    char ad[50];
+    char secim = ' ';
+    bool var = false;
 
+    cout << "Silinecek Musteri Adini Giriniz: ";
+    cin >> ad;
+
+    for (int i = 0; i < musteriSayisi; i++) {
+        if (strcmp(musteris[i].ad, ad) == 0) {
+            cout << "Silmek istediginiz Musteri Bilgileri" << endl;
+            cout << "Ad: " << musteris[i].ad << endl;
+            cout << "Soyad: " << musteris[i].soyad << endl;
+            cout << "Nereden: " << musteris[i].nereden << endl;
+            cout << "Nereye: " << musteris[i].nereye << endl;
+
+            cout << "\nSilmek Istediginiz Kayit Bu Mu? [E/H] : ";
+            secim = getche();
+            if (secim == 'e' || secim == 'E') {
+                var = true;
+                for (int j = i; j < musteriSayisi - 1; j++) {
+                    musteris[j] = musteris[j + 1];
+                }
+                musteriSayisi--;
+            }
+        }
+    }
+
+    if (var) {
+        cout << "\n Musteri Silindi" << endl;
+    } else {
+        cout << "\n Musteri Bulunamadi" << endl;
+    }
+}
 void TaxiEkle() {
     Taxi taxi;
     char secim;
@@ -293,41 +325,3 @@ void TaxiSil() {
         cout << "\n Taksi Bulunamadi" << endl;
     }
 }
-
-void TaxiDuzenle() {
-    char plaka[15];
-    char secim = ' ';
-    bool var = false;
-
-    cout << "Duzenlenecek Taksi Plakasini Giriniz : ";
-    cin >> plaka;
-
-    for (int i = 0; i < taxiSayisi; i++) {
-        if (strcmp(taxis[i].plaka, plaka) == 0) {
-            cout << "Duzeltmek istediginiz Taksi Bilgileri" << endl;
-            cout << "Taksi Plakasi: " << taxis[i].plaka << endl;
-            cout << "Taksi Modeli: " << taxis[i].model << endl;
-            cout << "Taksi Durumu: " << (taxis[i].durum == 'D' || 'd' ? "Uygun" : "Uygun Degil") << endl;
-
-            cout << "\nDuzeltmek Istediginiz Kayit Bu Mu? [E/H] : ";
-            secim = getche();
-            if (secim == 'E' || secim == 'e') {
-                var = true;
-                cout << "\nTaksi Plaka Giriniz" << endl;
-                cin >> taxis[i].plaka;
-                cout << "Taksi Model Giriniz" << endl;
-                cin >> taxis[i].model;
-                cout << "Taksi Durumu Giriniz (D/U)" << endl;
-                taxis[i].durum = getche();
-                cout << endl;
-            }
-        }
-    }
-
-    if (var) {
-        cout << "\nTaksi Duzeltildi." << endl;
-    } else {
-        cout << "\nTaksi Bulunamadi" << endl;
-    }
-}
-
