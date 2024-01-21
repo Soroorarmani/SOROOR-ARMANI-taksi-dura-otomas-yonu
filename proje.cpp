@@ -129,7 +129,7 @@ int main() {
 void MusteriEkle() {
     Musteri musteri;
     char secim;
-
+    int adet = 0;
     do {
         cout << "Musteri Adi: ";
         cin >> musteri.ad;
@@ -142,6 +142,7 @@ void MusteriEkle() {
 
         if (musteriSayisi < MAX_MUSTERI) {
             musteris[musteriSayisi++] = musteri;
+            adet++;
             cout << "Baska musteri eklemek ister misiniz? (E/H)" << endl;
             secim = getche();
             cout << endl;
@@ -152,7 +153,7 @@ void MusteriEkle() {
 
     } while (secim == 'e' || secim == 'E');
 
-    cout << "Musteri bilgileri basariyla eklendi." << endl;
+    cout << adet << " adet Musteri Ekledi.." << endl;
 }
 
 void MusteriListeleme() {
